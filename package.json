@@ -1,0 +1,28 @@
+{
+  "name": "dev-connector",
+  "version": "1.0.0",
+  "description": "Social network for developers",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "env-cmd config/dev.env nodemon src/server.js",
+    "test": "env-cmd config/test.env nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.16.4",
+    "express-validator": "^5.3.1",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.5.5",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "env-cmd": "^8.0.2",
+    "nodemon": "^1.19.0"
+  }
+}
