@@ -1,6 +1,6 @@
 const express = require('express');
 const { check, validationResult, body } = require('express-validator/check');
-const User = require('../../models/user');
+const User = require('../../models/User');
 const gravatar = require('gravatar');
 
 const router = express.Router();

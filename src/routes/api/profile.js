@@ -1,7 +1,7 @@
 const express = require('express');
 const auth = require('../../middleware/auth');
-const User = require('../../models/user');
-const Profile = require('../../models/profile');
+const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 const { check, validationResult } = require('express-validator/check');
 const request = require('request');
 
@@ -312,19 +312,27 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
 // @desc    get user's public repositories
 // @access  public
 router.get('/github/users/:username', (req, res) => {
-  const options = {
-    url: `https://api.github.com/users/${req.params.username}/repos`,
-    headers: {
-      'User-Agent': 'dev-connector' // Your Github ID or application name
-    }
-  };
-  request(options, function(error, response, body) {
-    console.log('error = ', error); // Print the error if one occurred
-    console.log('code = ', response && response.statusCode); // Print the response status code if a response was received
-    const result = JSON.parse(body);
-    console.log(result.length);
-    res.send('hi');
-  });
+  try {
+    const options = {
+      url: `https://api.github.com/users/${req.params.username}/repos`,
+      headers: {
+        'User-Agent': 'dev-connector' // Your Github ID or application name
+      }
+    };
+    request(options, function(error, response, body) {
+      if (error) throw new Error(error); // Print the error if one occurred
+      // Print the response status code if a response was received
+      if (response.statusCode !== 200) {
+        return res.status(404).send('GitHub Profile Not Found');
+      }
+      const result = JSON.parse(body);
+      const userRepo = result.map(repo => repo.name);
+      res.send({ userRepo });
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 module.exports = router;
