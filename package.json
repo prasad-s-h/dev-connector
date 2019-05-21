@@ -5,8 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "env-cmd config/dev.env nodemon src/server.js",
-    "test": "env-cmd config/test.env nodemon src/server.js"
+    "server-dev": "env-cmd config/dev.env nodemon src/server.js",
+    "server-test": "env-cmd config/test.env nodemon src/server.js",
+    "client": "npm start --prefix client",
+    "app": "concurrently \"npm run server-dev\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
